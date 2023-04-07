@@ -17,6 +17,7 @@ bot_token = os.getenv('API_TOKEN')
 
 # Создание бота с токеном, который выдал в BotFather при регистрации бота
 bot = Bot(token=bot_token)
+
 # Инициализация диспетчера команд
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -76,7 +77,7 @@ async def process_currency2(message: types.Message, state: FSMContext):
 async def process_convert(message: types.Message, state: FSMContext):
     await state.update_data(amount=message.text)
     user_data = await state.get_data()
-    await message.reply(math.ceil(int(user_data['amount']) / int(saved_state_global['step1']['rate'])))
+    await message.reply(math.floor(int(user_data['amount']) * int(saved_state_global['step1']['rate'])))
 
 
 if __name__ == '__main__':
